@@ -3,10 +3,10 @@ var ctx;
 var interval;
 var blobby;
 var enemySelector;
+var enemyActive;
 var keyboard = {};
 var enemies = [];
 var falling = false;
-var enemyActive = false;
 var inGame = false;
 var hit = false;
 
@@ -42,7 +42,7 @@ function menu() {
 
 //STARTS GAME LOOP AND ENTERS GAME
 function startGame() {
-
+    enemyActive = false;
     reset();
 
     for (var i = 0; i < 3; i++) {
@@ -51,8 +51,8 @@ function startGame() {
 
     blobby = new PlayerClass();
 
-    interval = setInterval(draw, 1);
     inGame = true;
+    interval = setInterval(draw, 1);
 }
 
 //ANIMATIONS
