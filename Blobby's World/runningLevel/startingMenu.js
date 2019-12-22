@@ -1,15 +1,14 @@
 var canvas;
 var ctx;
 var interval;
+var blobby;
 var enemySelector;
-var speed = 2;
 var keyboard = {};
 var enemies = [];
 var falling = false;
 var enemyActive = false;
 var inGame = false;
 var hit = false;
-var blobby = new PlayerClass();
 
 window.onload = initCanvas;
 
@@ -43,25 +42,51 @@ function menu() {
 
 //STARTS GAME LOOP AND ENTERS GAME
 function startGame() {
-    inGame = true;
+
+    reset();
 
     for (var i = 0; i < 3; i++) {
-        enemies[i] = new EnemyClass(i, 960, speed);
+        enemies[i] = new EnemyClass(i, 960);
     }
 
+    blobby = new PlayerClass();
+
     interval = setInterval(draw, 1);
+    inGame = true;
 }
 
 //ANIMATIONS
 function draw() {
-    //STOPS GAME IF HIT
-    if (hit) {
-        clearInterval(interval);
-    }
-
     //GAME BACKGROUND
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    //EXP BAR
+    ctx.lineCap = 'round';
+
+    ctx.strokeStyle = '#EEEEEE';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(100, 25);
+    ctx.lineTo(540, 25);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(100, 25);
+    ctx.lineTo(540, 25);
+    ctx.stroke();
+    ctx.closePath();
+    
+    ctx.strokeStyle = '#FF00FF';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(100, 25);
+    ctx.lineTo((440 / 50) * (blobby.exp - 1) + 100, 25);
+    ctx.stroke();
+    ctx.closePath();
 
     //GAME FLOOR
     ctx.fillStyle = '#FF0000';
@@ -92,8 +117,18 @@ function enemySpawn() {
         }
         //RETURNS ENEMY TO START AFTER IT PASSES BEHIND PLAYER
         if (enemies[i].x + enemies[i].width <= 0) {
+            blobby.exp += 1;
             enemyActive = false;
             enemies[i].x = 960;
         }
+        enemies[i].difficulty();
+    }
+}
+
+function reset() {
+    //STOPS GAME LOOP IF STILL PLAYING
+    if (inGame) {
+        clearInterval(interval);
+        inGame = false;
     }
 }

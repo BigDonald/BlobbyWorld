@@ -6,8 +6,9 @@ class PlayerClass {
         this.height = 50;
         this.acc = 0.12;
         this.vel = 7;
-        this.otherAcc = 4;
-        this.otherVel = 3;
+        this.otherAcc = 0.12;
+        this.otherVel = 1;
+        this.exp = 1;
     }
     show() {
         ctx.fillStyle = '#FFFFFF';
@@ -36,10 +37,11 @@ class PlayerClass {
             if (this.y >= 350) {
                 keyboard[38] = false;
                 this.y = 350;
-                this.acc = 0.13;
-                this.vel = 7.5;
-                this.otherVel = 3;
-                this.otherAcc = 4;
+                this.acc = 0.12;
+                this.vel = 7;
+                this.otherAcc = 0.12;
+                this.otherVel = 1;
+               
             }
         }
         //DOWN ARROW KEY IS PRESSED
@@ -66,6 +68,7 @@ class PlayerClass {
     detectCollision(enemyType) {
         if (enemyType != 0) {
             if (this.right > enemies[enemyType].x && this.x < enemies[enemyType].right && this.y < enemies[enemyType].bottom && this.bottom > enemies[enemyType].y) {
+                falling = false;
                 clearInterval(interval);
             }
         } else {
@@ -75,9 +78,9 @@ class PlayerClass {
                 this.y += this.vel;
             }
             if (this.y >= 480) {
+                falling = false;
                 clearInterval(interval);
             }
         }
     }
-
 }

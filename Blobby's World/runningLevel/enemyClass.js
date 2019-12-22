@@ -1,7 +1,7 @@
 class EnemyClass {
-    constructor(type, x, s) {
+    constructor(type, x) {
         this.x = x;
-        this.speed = s;
+        this.speed = 2;
         this.right;
         this.bottom;
 
@@ -42,5 +42,9 @@ class EnemyClass {
         this.x -= this.speed;
         this.right = this.x + this.width;
         this.bottom = this.y + this.height;
+    }
+
+    difficulty() {
+        this.speed = blobby.exp / 10 + 2;
     }
 }
