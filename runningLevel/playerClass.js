@@ -72,12 +72,17 @@ class PlayerClass {
                 clearInterval(interval);
             }
         } else {
-            if (this.x > enemies[enemyType].x && this.right < enemies[enemyType].right && this.y >= 350) {
+            if (this.x > enemies[enemyType].x && this.right <= enemies[enemyType].right && this.y >= 350) {
                 falling = true;
                 this.vel += this.acc;
                 this.y += this.vel;
             }
-            if (this.y >= 480) {
+            if (this.y > 400 && enemies[enemyType].right <= this.right) {
+                this.exp = 0;
+                enemies[enemyType].speed = 0;
+                enemies[enemyType].right = this.right;
+            }
+            if (this.y > 480) {
                 falling = false;
                 clearInterval(interval);
             }

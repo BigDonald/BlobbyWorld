@@ -114,6 +114,7 @@ function enemySpawn() {
         if (i == enemySelector) {
             blobby.detectCollision(i);
             enemies[i].move();
+            enemies[i].difficulty();
         }
         //RETURNS ENEMY TO START AFTER IT PASSES BEHIND PLAYER
         if (enemies[i].x + enemies[i].width <= 0) {
@@ -121,7 +122,6 @@ function enemySpawn() {
             enemyActive = false;
             enemies[i].x = 960;
         }
-        enemies[i].difficulty();
     }
 }
 

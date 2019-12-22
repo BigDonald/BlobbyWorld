@@ -1,7 +1,7 @@
 class EnemyClass {
     constructor(type, x) {
         this.x = x;
-        this.speed = 2;
+        this.speed = 0;
         this.right;
         this.bottom;
 
@@ -38,13 +38,13 @@ class EnemyClass {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
+    difficulty() {
+        this.speed = blobby.exp / 10 + 2;
+    }
+
     move() {
         this.x -= this.speed;
         this.right = this.x + this.width;
         this.bottom = this.y + this.height;
-    }
-
-    difficulty() {
-        this.speed = blobby.exp / 10 + 2;
     }
 }
