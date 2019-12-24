@@ -3,8 +3,13 @@
     <head>
         <title>Blobby's Adventure</title>
         <script src='./runningLevel/playerClass.js'></script>
-        <script src='./runningLevel/enemyClass.js'></script>
-        <script src='./runningLevel/startingMenu.js'></script>
+        <script src='./runningLevel/runningEnemyClass.js'></script>
+        <script src='./runningLevel/runningGameLevel.js'></script>
+        <script src='./flyingLevel/gameLevel.js'></script>
+        <script src='./flyingLevel/flyingEnemyClass.js'></script>
+        <script src='./flyingLevel/flyingPlayerClass.js'></script>
+        <script src='./startingMenu.js'></script>
+
     </head>
     <body>
         <div>
@@ -12,7 +17,8 @@
         </div>
         <div>
             <button onclick='menu()'>MAIN MENU </button> 
-            <button onclick='startGame()'>START GAME</button>
+            <button onclick='startRunningGame()'>START RUNNING GAME</button>
+            <button onclick='startFlyingGame()'>START FLYING GAME</button>
         </div>
     </body>
 </html>

@@ -1,58 +1,17 @@
-var canvas;
-var ctx;
-var interval;
-var blobby;
-var enemySelector;
-var enemyActive;
-var keyboard = {};
-var enemies = [];
-var falling = false;
-var inGame = false;
-var hit = false;
-
-window.onload = initCanvas;
-
-function initCanvas() {
-    //CREATES CANVAS ELEMENT
-    canvas = document.getElementById('myCanvas');
-    ctx = canvas.getContext('2d');
-
-    //MAIN MENU VISUAL
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = "50px Sans-Serif";
-    ctx.fillText("Blobby's Adventure", 100, 100); 
-}
-
-//TAKES PLAYER TO MAIN MENU
-function menu() {
-    //STOPS GAME LOOP IF STILL PLAYING
-    if (inGame) {
-        clearInterval(interval);
-    }
-
-    //MAIN MENU VISUAL
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = "50px Sans-Serif";
-    ctx.fillText("Blobby's Adventure", 100, 100); 
-}
-
 //STARTS GAME LOOP AND ENTERS GAME
-function startGame() {
+function startRunningGame() {
+    clearInterval(runningGameLoop);
+    clearInterval(flyingGameLoop);
+
     enemyActive = false;
-    reset();
 
     for (var i = 0; i < 3; i++) {
-        enemies[i] = new EnemyClass(i, 960);
+        runningEnemies[i] = new RunningEnemyClass(i, 960);
     }
 
     blobby = new PlayerClass();
 
-    inGame = true;
-    interval = setInterval(draw, 1);
+    runningGameLoop = setInterval(draw, 1);
 }
 
 //ANIMATIONS
@@ -93,7 +52,7 @@ function draw() {
     ctx.fillRect(0, 400, 640, 80);
 
     //ENEMY OBSTACLES
-    enemySpawn();
+    spawnRunningEnemies();
 
     //PLAYER
     blobby.show();
@@ -101,7 +60,7 @@ function draw() {
     blobby.movement();
 } 
 
-function enemySpawn() {
+function spawnRunningEnemies() {
     //SELECTS ENEMY IF NONE IS SLECTED
     if (!enemyActive) {
         enemySelector = Math.round(Math.random() * 2);
@@ -109,26 +68,18 @@ function enemySpawn() {
     }
     //SHOWS ALL ENEMIES
     for (var i = 0; i < 3; i++) {
-        enemies[i].show();
+        runningEnemies[i].show();
         //MOVES SELECTED ENEMY
         if (i == enemySelector) {
             blobby.detectCollision(i);
-            enemies[i].move();
-            enemies[i].difficulty();
+            runningEnemies[i].move();
+            runningEnemies[i].difficulty();
         }
         //RETURNS ENEMY TO START AFTER IT PASSES BEHIND PLAYER
-        if (enemies[i].x + enemies[i].width <= 0) {
+        if (runningEnemies[i].x + runningEnemies[i].width <= 0) {
             blobby.exp += 1;
             enemyActive = false;
-            enemies[i].x = 960;
+            runningEnemies[i].x = 960;
         }
-    }
-}
-
-function reset() {
-    //STOPS GAME LOOP IF STILL PLAYING
-    if (inGame) {
-        clearInterval(interval);
-        inGame = false;
     }
 }

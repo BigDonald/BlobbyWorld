@@ -1,4 +1,4 @@
-class EnemyClass {
+class RunningEnemyClass {
     constructor(type, x) {
         this.x = x;
         this.speed = 0;

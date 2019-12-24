@@ -67,24 +67,24 @@ class PlayerClass {
 
     detectCollision(enemyType) {
         if (enemyType != 0) {
-            if (this.right > enemies[enemyType].x && this.x < enemies[enemyType].right && this.y < enemies[enemyType].bottom && this.bottom > enemies[enemyType].y) {
+            if (this.right > runningEnemies[enemyType].x && this.x < runningEnemies[enemyType].right && this.y < runningEnemies[enemyType].bottom && this.bottom > runningEnemies[enemyType].y) {
                 falling = false;
-                clearInterval(interval);
+                clearInterval(runningGameLoop);
             }
         } else {
-            if (this.x > enemies[enemyType].x && this.right <= enemies[enemyType].right && this.y >= 350) {
+            if (this.x > runningEnemies[enemyType].x && this.right <= runningEnemies[enemyType].right && this.y >= 350) {
                 falling = true;
                 this.vel += this.acc;
                 this.y += this.vel;
             }
-            if (this.y > 400 && enemies[enemyType].right <= this.right) {
+            if (this.y > 400 && runningEnemies[enemyType].right <= this.right) {
                 this.exp = 0;
-                enemies[enemyType].speed = 0;
-                enemies[enemyType].right = this.right;
+                runningEnemies[enemyType].speed = 0;
+                runningEnemies[enemyType].right = this.right;
             }
             if (this.y > 480) {
                 falling = false;
-                clearInterval(interval);
+                clearInterval(runningGameLoop);
             }
         }
     }
